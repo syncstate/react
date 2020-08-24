@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 export const SyncStateReactContext: any = /*#__PURE__*/ React.createContext(
   null

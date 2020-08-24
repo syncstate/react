@@ -1,13 +1,14 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+import { Provider } from '../src';
+import SSContext from '../src/components/Context';
 
 const App = () => {
   return (
-    <div>
-      <Thing />
-    </div>
+    <Provider store={{}}>
+      <div>awd</div>
+    </Provider>
   );
 };
 
