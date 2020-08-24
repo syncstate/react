@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import SyncStateReactContext from '../components/Context';
 import { produceWithPatches, enablePatches } from 'immer';
+enablePatches();
 
 //create your forceUpdate hook
 function useForceUpdate() {
