@@ -1,4 +1,4 @@
-#SyncState React
+# SyncState React
 
 ### Introduction
 
