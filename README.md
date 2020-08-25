@@ -50,7 +50,7 @@ const decrement = () =>
   });
 ```
 
-### Here's a Counter App Demonstrating the use of Provider and useDoc()
+### Here's a Counter App demonstrating the use of Provider and useDoc()
 
 ```tsx
 import React from 'react';
