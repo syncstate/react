@@ -35,7 +35,7 @@
     "trailingComma": "es5"
   },
   "name": "@syncstate/react",
-  "author": "Himanshu Satija",
+  "author": "Sanket Sahu, Himanshu Satija",
   "module": "dist/react.esm.js",
   "devDependencies": {
     "@types/react": "^16.9.46",

@@ -11,52 +11,54 @@ function useForceUpdate() {
 
 export function useDoc(path: Array<string | number> = []) {
   const forceUpdate = useForceUpdate();
-  const doc: any = useContext(SyncStateReactContext);
+  const store: any = useContext(SyncStateReactContext);
 
   useEffect(() => {
-    const unwatch = doc.watchPath(path, () => forceUpdate());
+    const unwatch = store.watchPath(path, () => forceUpdate());
 
     return unwatch;
   }, []);
   // console.log(path, doc.getStateAtPath(path), 'doc.getStateAtPath(path)');
 
-  const stateAtPath = doc.getStateAtPath(path);
+  return store.useDoc(path);
 
-  return [
-    stateAtPath,
-    (cb: any) => {
-      if (typeof cb !== 'function') {
-        throw new Error(
-          'Received an object. Expecting a callback function which receives the object you want to modify.'
-        );
-      }
+  // const stateAtPath = store.getStateAtPath(path);
 
-      // @ts-ignore
-      let [nextState, patches, inversePatches] = produceWithPatches(
-        stateAtPath,
-        (draft: any) => {
-          cb(draft);
-        }
-      );
-      // console.log(path, 'path');
-      // console.log(JSON.stringify(patches, null, 2), 'patches before');
-      patches = patches.map((p: any) => {
-        return { ...p, path: [...path, ...p.path] };
-      });
+  // return [
+  //   stateAtPath,
+  //   (cb: any) => {
+  //     if (typeof cb !== 'function') {
+  //       throw new Error(
+  //         'Received an object. Expecting a callback function which receives the object you want to modify.'
+  //       );
+  //     }
 
-      inversePatches = inversePatches.map((p: any) => {
-        return { ...p, path: [...path, ...p.path] };
-      });
-      // console.log(JSON.stringify(patches, null, 2), 'patches');
+  //     // @ts-ignore
+  //     let [nextState, patches, inversePatches] = produceWithPatches(
+  //       stateAtPath,
+  //       (draft: any) => {
+  //         cb(draft);
+  //       }
+  //     );
+  //     // console.log(path, 'path');
+  //     // console.log(JSON.stringify(patches, null, 2), 'patches before');
+  //     patches = patches.map((p: any) => {
+  //       return { ...p, path: [...path, ...p.path] };
+  //     });
 
-      doc.dispatch({
-        type: 'PATCHES',
-        payload: patches.map((patch: any, index: number) => ({
-          patch: patch,
-          inversePatch: inversePatches[index],
-        })),
-      });
-    },
-    doc.dispatch,
-  ];
+  //     inversePatches = inversePatches.map((p: any) => {
+  //       return { ...p, path: [...path, ...p.path] };
+  //     });
+  //     // console.log(JSON.stringify(patches, null, 2), 'patches');
+
+  //     store.dispatch({
+  //       type: 'PATCHES',
+  //       payload: patches.map((patch: any, index: number) => ({
+  //         patch: patch,
+  //         inversePatch: inversePatches[index],
+  //       })),
+  //     });
+  //   },
+  //   store.dispatch,
+  // ];
 }
