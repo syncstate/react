@@ -9,56 +9,16 @@ function useForceUpdate() {
   return () => setValue(value => ++value); // update the state to force render
 }
 
-export function useDoc(path: Array<string | number> = []) {
+export function useDoc(path: Array<string | number> = [], depth: number = 1) {
   const forceUpdate = useForceUpdate();
   const store: any = useContext(SyncStateReactContext);
 
   useEffect(() => {
-    const unwatch = store.watchPath(path, () => forceUpdate());
+    const dispose = store.observe(path, () => forceUpdate(), depth);
 
-    return unwatch;
+    return dispose;
   }, []);
   // console.log(path, doc.getStateAtPath(path), 'doc.getStateAtPath(path)');
 
   return store.useDoc(path);
-
-  // const stateAtPath = store.getStateAtPath(path);
-
-  // return [
-  //   stateAtPath,
-  //   (cb: any) => {
-  //     if (typeof cb !== 'function') {
-  //       throw new Error(
-  //         'Received an object. Expecting a callback function which receives the object you want to modify.'
-  //       );
-  //     }
-
-  //     // @ts-ignore
-  //     let [nextState, patches, inversePatches] = produceWithPatches(
-  //       stateAtPath,
-  //       (draft: any) => {
-  //         cb(draft);
-  //       }
-  //     );
-  //     // console.log(path, 'path');
-  //     // console.log(JSON.stringify(patches, null, 2), 'patches before');
-  //     patches = patches.map((p: any) => {
-  //       return { ...p, path: [...path, ...p.path] };
-  //     });
-
-  //     inversePatches = inversePatches.map((p: any) => {
-  //       return { ...p, path: [...path, ...p.path] };
-  //     });
-  //     // console.log(JSON.stringify(patches, null, 2), 'patches');
-
-  //     store.dispatch({
-  //       type: 'PATCHES',
-  //       payload: patches.map((patch: any, index: number) => ({
-  //         patch: patch,
-  //         inversePatch: inversePatches[index],
-  //       })),
-  //     });
-  //   },
-  //   store.dispatch,
-  // ];
 }
