@@ -27,10 +27,6 @@ export function useSyncState(
   return store.useDoc(subtree, path);
 }
 
-export function useDoc(
-  subtree: string,
-  path: Array<string | number> = [],
-  depth: number = 1
-) {
-  return useSyncState(subtree, path, depth);
+export function useDoc(path: Array<string | number> = [], depth: number = 1) {
+  return useSyncState('doc', path, depth);
 }
