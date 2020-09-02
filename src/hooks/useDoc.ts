@@ -24,7 +24,7 @@ export function useSyncState(
   }, []);
   // console.log(path, doc.getStateAtPath(path), 'doc.getStateAtPath(path)');
 
-  return store.useDoc(subtree, path);
+  return store.useSyncState(subtree, path);
 }
 
 export function useDoc(path: Array<string | number> = [], depth: number = 1) {
