@@ -9,16 +9,28 @@ function useForceUpdate() {
   return () => setValue(value => ++value); // update the state to force render
 }
 
-export function useDoc(path: Array<string | number> = [], depth: number = 1) {
+export function useSyncState(
+  subtree: string,
+  path: Array<string | number> = [],
+  depth: number = 1
+) {
   const forceUpdate = useForceUpdate();
   const store: any = useContext(SyncStateReactContext);
 
   useEffect(() => {
-    const dispose = store.observe(path, () => forceUpdate(), depth);
+    const dispose = store.observe(subtree, path, () => forceUpdate(), depth);
 
     return dispose;
   }, []);
   // console.log(path, doc.getStateAtPath(path), 'doc.getStateAtPath(path)');
 
-  return store.useDoc(path);
+  return store.useDoc(subtree, path);
+}
+
+export function useDoc(
+  subtree: string,
+  path: Array<string | number> = [],
+  depth: number = 1
+) {
+  return useSyncState(subtree, path, depth);
 }
