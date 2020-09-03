@@ -11,7 +11,7 @@ function useForceUpdate() {
 
 export function useSyncState(
   subtree: string,
-  path: Array<string | number> = [],
+  path: string = '',
   depth: number = 1
 ) {
   const forceUpdate = useForceUpdate();
@@ -27,6 +27,6 @@ export function useSyncState(
   return store.useSyncState(subtree, path);
 }
 
-export function useDoc(path: Array<string | number> = [], depth: number = 1) {
+export function useDoc(path: string = '', depth: number = 1) {
   return useSyncState('doc', path, depth);
 }
