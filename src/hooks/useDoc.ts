@@ -19,7 +19,7 @@ export function useSyncState(
     const dispose = store.observe(subtree, path, () => forceUpdate(), depth);
 
     return dispose;
-  }, []);
+  }, [subtree, path, depth]);
   // console.log(path, doc.getStateAtPath(path), 'doc.getStateAtPath(path)');
 
   return store.useSyncState(subtree, path);

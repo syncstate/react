@@ -16,7 +16,7 @@ export function useComputed(subtree: string, computeCallback: ComputeCallback) {
     });
 
     return dispose;
-  }, []);
+  }, [subtree, computeCallback]);
 
   console.log('computed value through hook', computedValue);
 
